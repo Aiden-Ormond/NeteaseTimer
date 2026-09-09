@@ -5,8 +5,16 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[],
-    hiddenimports=['pycaw', 'comtypes', 'requests'],
+    datas=[('app.ico', '.')],
+    hiddenimports=[
+        'pycaw',
+        'pycaw.constants',
+        'pycaw.api',
+        'comtypes.client',
+        'comtypes.gen',
+        'win32com',
+        'requests'
+    ],
     hookspath=[],
     hooksconfig={},
     runtime_hooks=[],
@@ -38,5 +46,4 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    # 不指定图标，使用默认 exe 图标
 )
