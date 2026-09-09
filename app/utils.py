@@ -1,7 +1,6 @@
 import sys, os, socket, winreg, subprocess, requests, re
 
 def ensure_single_instance():
-    """使用端口绑定确保单实例运行"""
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         sock.bind(('127.0.0.1', 54321))
@@ -11,7 +10,6 @@ def ensure_single_instance():
         return False
 
 def set_autostart(enabled):
-    """设置开机自启（注册表）"""
     key_path = r"Software\Microsoft\Windows\CurrentVersion\Run"
     try:
         key = winreg.OpenKey(winreg.HKEY_CURRENT_USER, key_path, 0, winreg.KEY_SET_VALUE | winreg.KEY_QUERY_VALUE)
@@ -28,7 +26,6 @@ def set_autostart(enabled):
         print(f"Autostart error: {e}")
 
 def is_network_available():
-    """检测网络是否可用"""
     try:
         requests.get("https://music.163.com", timeout=3)
         return True
@@ -36,7 +33,6 @@ def is_network_available():
         return False
 
 def parse_share_link(url):
-    """从网易云分享链接提取歌单/歌曲ID"""
     patterns = [
         r'playlist/(\d+)',
         r'song\?id=(\d+)',
