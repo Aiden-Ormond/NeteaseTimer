@@ -11,6 +11,17 @@ from app.scheduler import TaskScheduler
 from app.utils import set_autostart, parse_share_link
 
 
+def get_resource_path(relative_path):
+    """获取资源的绝对路径，兼容开发环境和 PyInstaller 打包后的 exe"""
+    try:
+        # PyInstaller 创建临时目录，将路径存储在 sys._MEIPASS 中
+        base_path = sys._MEIPASS
+    except AttributeError:
+        # 开发环境：当前文件在 app/ 目录下，向上两级到项目根目录
+        base_path = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+
+
 class AboutDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -75,15 +86,15 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(500, 600)
         self.setMaximumWidth(560)
 
-        # ---- 加载图标（外部 app.ico，自动回退）----
-        icon_path = os.path.join(os.path.dirname(__file__), '..', 'app.ico')
+        # ---- 加载图标（兼容开发与打包环境）----
+        icon_path = get_resource_path('app.ico')
         if os.path.exists(icon_path):
             app_icon = QIcon(icon_path)
         else:
             app_icon = self.style().standardIcon(QStyle.SP_ComputerIcon)
         self.setWindowIcon(app_icon)
 
-        # 全局暗色 Spotify 风格样式
+        # 全局暗色 Spotify 风格样式（与之前相同，省略重复）
         self.setStyleSheet("""
             QMainWindow {
                 background-color: #121212;
