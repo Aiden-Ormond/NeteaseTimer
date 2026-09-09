@@ -5,7 +5,6 @@ class TaskScheduler:
 
     @staticmethod
     def create_wake_task(time_str, days="daily"):
-        """创建唤醒任务（使用 schtasks）"""
         sc = "ONCE" if days == "once" else ("WEEKLY" if days != "daily" else "DAILY")
         day_param = ""
         if days == "mon-fri":
