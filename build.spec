@@ -5,7 +5,7 @@ a = Analysis(
     ['main.py'],
     pathex=[],
     binaries=[],
-    datas=[('app.ico', '.')],
+    datas=[('app.ico', '.')],          # 将 app.ico 复制到 exe 同级目录
     hiddenimports=[
         'pycaw',
         'pycaw.constants',
@@ -46,4 +46,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon='app.ico'               # ← 关键！让 exe 本身也使用这个图标
 )
